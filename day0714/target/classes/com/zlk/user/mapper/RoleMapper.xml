@@ -10,10 +10,20 @@
         <collection property="userRole" ofType="com.zlk.user.entity.UserRole">
             <result property="roleId" column="role_id" javaType="java.lang.Integer"></result>
             <result property="userId" column="user_id" javaType="java.lang.Integer"></result>
+            <association property="user" javaType="com.zlk.user.entity.User">
+                <id property="id" column="id" javaType="java.lang.Integer"></id>
+                <result property="name" column="name" javaType="java.lang.String"></result>
+                <result property="password" column="password" javaType="java.lang.String"></result>
+                <result property="age" column="age" javaType="java.lang.Integer"></result>
+                <result property="sex" column="sex" javaType="java.lang.String"></result>
+                <result property="tel" column="name" javaType="java.lang.String"></result>
+                <result property="point" column="point" javaType="java.lang.Integer"></result>
+                <result property="createTime" column="createTime" javaType="java.util.Date"></result>
+            </association>
         </collection>
     </resultMap>
-    <select id="findRoleById" resultMap="roleMap">
-        select r.*,ur.user_id from role r,user_role ur
-        where r.role_id = ur.role_id
+    <select id="findRoleById" parameterType="int" resultMap="roleMap">
+        select * from role r,user_role ur,user u
+        where r.role_id = #{id} and r.role_id = ur.role_id and ur.user_id = u.id
     </select>
 </mapper>

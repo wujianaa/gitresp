@@ -1,8 +1,7 @@
 package com.zlk.user.entity;
 
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 
 
@@ -22,8 +21,17 @@ public class User {
     /**分数*/
     private int point;
     /**用户创建创建时间*/
-    private DateFormat createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private Date createTime;
     private UserRole userRole;
+    private Role role;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public UserRole getUserRole() {
         return userRole;
@@ -36,7 +44,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String name, String password, int age, String sex, String tel, int point, DateFormat createTime) {
+    public User(int id, String name, String password, int age, String sex, String tel, int point, Date createTime) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -103,11 +111,11 @@ public class User {
         this.point = point;
     }
 
-    public DateFormat getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(DateFormat createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 

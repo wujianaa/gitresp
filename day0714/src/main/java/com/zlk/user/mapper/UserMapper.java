@@ -2,6 +2,7 @@ package com.zlk.user.mapper;
 
 import com.zlk.user.entity.User;
 
+import java.util.Date;
 import java.util.List;
 
 public interface UserMapper {
@@ -17,4 +18,6 @@ public interface UserMapper {
     Integer deleteUserById(int id);
     /**查询用户id查询角色*/
     List<User>  findUserRoleById(int id);
+    /**按时间区间查询和统计*/
+    List<User> findUserByTime(Date startTime,Date endTime);
 }

@@ -14,8 +14,9 @@ public class RoleTest {
         RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
         List<Role> roleList = roleMapper.findRoleById(2);
         for (Role role : roleList) {
-            System.out.println(role.toString());
-            System.out.println(role.getUserRole().getUserId());
+            System.out.print(role.toString()+",");
+            System.out.print(role.getUserRole()+",");
+            System.out.println(role.getUserRole().getUser().toString());
         }
     }
 }

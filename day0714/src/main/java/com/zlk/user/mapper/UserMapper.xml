@@ -4,22 +4,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zlk.user.mapper.UserMapper">
     <resultMap id="UserMap" type="com.zlk.user.entity.User">
-        <id property="id" column="Id" javaType="java.lang.Integer"></id>
-        <result property="name" column="Name" javaType="java.lang.String"></result>
-        <result property="password" column="Pwd" javaType="java.lang.String"></result>
-        <result property="age" column="Age" javaType="java.lang.Integer"></result>
-        <result property="sex" column="Sex" javaType="java.lang.String"></result>
-        <result property="tel" column="Name" javaType="java.lang.String"></result>
-        <result property="point" column="Point" javaType="java.lang.Integer"></result>
-        <!--<result property="createTime" column="createTime" javaType="java.text.DateFormat;"></result>-->
-        <collection property="userRole" ofType="com.zlk.user.entity.UserRole">
+        <id property="id" column="id" javaType="java.lang.Integer"></id>
+        <result property="name" column="name" javaType="java.lang.String"></result>
+        <result property="password" column="password" javaType="java.lang.String"></result>
+        <result property="age" column="age" javaType="java.lang.Integer"></result>
+        <result property="sex" column="sex" javaType="java.lang.String"></result>
+        <result property="tel" column="phone" javaType="java.lang.String"></result>
+        <result property="point" column="point" javaType="java.lang.Integer"></result>
+        <result property="createTime" column="createTime" javaType="java.util.Date"></result>
+        <!--用户与用户角色1-多-->
+        <association property="userRole" javaType="com.zlk.user.entity.UserRole">
             <result property="roleId" column="role_id" javaType="java.lang.Integer"></result>
             <result property="userId" column="user_id" javaType="java.lang.Integer"></result>
+        <collection property="role" ofType="com.zlk.user.entity.Role">
+            <id property="roleId" column="role_id" javaType="java.lang.Integer"></id>
+            <result property="roleName" column="role_name" javaType="java.lang.String"></result>
+            <result property="roleDesc" column="role_desc" javaType="java.lang.String"></result>
         </collection>
+    </association>
     </resultMap>
     <select id="findUserRoleById" parameterType="int" resultMap="UserMap">
-       select u.*,ur.user_id from user u,user_role ur
-       where u.id = ur.user_id
+       select u.*,ur.role_id,r.role_name,r.role_desc from user u,user_role ur,role r
+       where u.id = #{id} and u.id = ur.user_id and ur.role_id = r.role_id
     </select>
 <select id="findUserAll" resultType="com.zlk.user.entity.User">
     SELECT * FROM USER
@@ -33,7 +39,7 @@
     <delete id="deleteUserById" parameterType="int">
         delete from user where id = #{id}
     </delete>
-    <insert id="saveUser" parameterType="com.zlk.user.entity.User" >
+    <insert id="saveUser" parameterType="com.zlk.user.entity.User" useGeneratedKeys="true" keyProperty="id">
         insert into user 
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null and name !=''">
@@ -83,4 +89,15 @@
             </if>
         </trim>
     </insert>
+    <select id="findUserByTime" parameterType="java.util.Date" resultType="com.zlk.user.entity.User">
+        select *from User
+        <where>
+            <if test="param1!=null and param1!=''">
+                and createTime <![CDATA[>=]]>  #{param1}
+            </if>
+            <if test="param2!=null and param2!=''">
+                 and createTime <![CDATA[<=]]>  #{param2}
+            </if>
+        </where>
+    </select>
 </mapper>

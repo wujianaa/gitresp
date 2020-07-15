@@ -18,8 +18,6 @@
     <!--加载sql映射配置文件-->
     <mappers>
         <mapper resource="com/zlk/user/mapper/UserMapper.xml"/>
-    </mappers>
-    <mappers>
         <mapper resource="com/zlk/user/mapper/RoleMapper.xml"/>
     </mappers>
     <!--

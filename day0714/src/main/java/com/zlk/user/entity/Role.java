@@ -8,6 +8,16 @@ public class Role {
     /**roleDesc*/
     private String roleDesc;
    private UserRole userRole;
+   private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Role() {
     }
 
