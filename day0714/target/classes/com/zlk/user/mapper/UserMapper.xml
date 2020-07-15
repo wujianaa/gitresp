@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlk.user.mapper.UserMapper">
+    <resultMap id="UserMap" type="com.zlk.user.entity.User">
+        <id property="id" column="Id" javaType="java.lang.Integer"></id>
+        <result property="name" column="Name" javaType="java.lang.String"></result>
+        <result property="password" column="Pwd" javaType="java.lang.String"></result>
+        <result property="age" column="Age" javaType="java.lang.Integer"></result>
+        <result property="sex" column="Sex" javaType="java.lang.String"></result>
+        <result property="tel" column="Name" javaType="java.lang.String"></result>
+        <result property="point" column="Point" javaType="java.lang.Integer"></result>
+        <!--<result property="createTime" column="createTime" javaType="java.text.DateFormat;"></result>-->
+        <collection property="userRole" ofType="com.zlk.user.entity.UserRole">
+            <result property="roleId" column="role_id" javaType="java.lang.Integer"></result>
+            <result property="userId" column="user_id" javaType="java.lang.Integer"></result>
+        </collection>
+    </resultMap>
+    <select id="findUserRoleById" parameterType="int" resultMap="UserMap">
+       select u.*,ur.user_id from user u,user_role ur
+       where u.id = ur.user_id
+    </select>
+<select id="findUserAll" resultType="com.zlk.user.entity.User">
+    SELECT * FROM USER
+</select>
+    <select id="findUserById" parameterType="int" resultType="com.zlk.user.entity.User">
+        select * from user where id=#{id}
+    </select>
+    <select id="findUserByName" parameterType="String" resultType="com.zlk.user.entity.User">
+        select * from user where name=#{name}
+    </select>
+    <delete id="deleteUserById" parameterType="int">
+        delete from user where id = #{id}
+    </delete>
+    <insert id="saveUser" parameterType="com.zlk.user.entity.User" >
+        insert into user 
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name !=''">
+                name,
+            </if>
+            <if test="password != null and password !=''">
+                password,
+            </if>
+            <if test="age != null and age !=''">
+                age,
+            </if>
+            <if test="sex != null and sex !=''">
+                sex,
+            </if>
+            <if test="tel != null and tel !=''">
+                tel,
+            </if>
+            <if test="point != null and point !=''">
+                point,
+            </if>
+            <if test="createTime != null and createTime !=''">
+                createTime,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name !=''">
+                #{name},
+            </if>
+            <if test="password != null and password !=''">
+                #{password},
+            </if>
+            <if test="age != null and age !=''">
+               #{age},
+            </if>
+            <if test="sex != null and sex !=''">
+                #{sex},
+            </if>
+            <if test="tel != null and tel !=''">
+                #{tel},
+            </if>
+            <if test="point != null and point !=''">
+                #{point},
+            </if>
+            <if test="createTime != null and createTime !=''">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+</mapper>
